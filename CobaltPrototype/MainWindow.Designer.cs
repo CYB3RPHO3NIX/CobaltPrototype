@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             statusStrip1 = new StatusStrip();
             tsLabelConnectivity = new ToolStripStatusLabel();
@@ -36,11 +37,27 @@
             tsButtonDatabase = new ToolStripDropDownButton();
             tsButtonSchema = new ToolStripDropDownButton();
             tsButtonTable = new ToolStripDropDownButton();
+            tsTableStatistics = new ToolStripStatusLabel();
             flowLayoutPanel = new FlowLayoutPanel();
             btnAddNewFilter = new Button();
-            tsTableStatistics = new ToolStripStatusLabel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            btnFirstPage = new Button();
+            btnPreviousPage = new Button();
+            label3 = new Label();
+            numericUpDown1 = new NumericUpDown();
+            label2 = new Label();
+            label1 = new Label();
+            cbPageSize = new ComboBox();
+            btnNextPage = new Button();
+            btnLastPage = new Button();
+            bindingSource1 = new BindingSource(components);
+            dataGridView = new DataGridView();
             statusStrip1.SuspendLayout();
             flowLayoutPanel.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
             // statusStrip1
@@ -105,6 +122,12 @@
             tsButtonTable.Text = "Table";
             tsButtonTable.DropDownItemClicked += tsButtonTable_DropDownItemClicked;
             // 
+            // tsTableStatistics
+            // 
+            tsTableStatistics.Name = "tsTableStatistics";
+            tsTableStatistics.Size = new Size(83, 17);
+            tsTableStatistics.Text = "Table Statistics";
+            // 
             // flowLayoutPanel
             // 
             flowLayoutPanel.AutoSize = true;
@@ -125,17 +148,132 @@
             btnAddNewFilter.Text = "Add new Filter";
             btnAddNewFilter.UseVisualStyleBackColor = true;
             // 
-            // tsTableStatistics
+            // flowLayoutPanel1
             // 
-            tsTableStatistics.Name = "tsTableStatistics";
-            tsTableStatistics.Size = new Size(83, 17);
-            tsTableStatistics.Text = "Table Statistics";
+            flowLayoutPanel1.AutoSize = true;
+            flowLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanel1.Controls.Add(btnFirstPage);
+            flowLayoutPanel1.Controls.Add(btnPreviousPage);
+            flowLayoutPanel1.Controls.Add(label3);
+            flowLayoutPanel1.Controls.Add(numericUpDown1);
+            flowLayoutPanel1.Controls.Add(label2);
+            flowLayoutPanel1.Controls.Add(label1);
+            flowLayoutPanel1.Controls.Add(cbPageSize);
+            flowLayoutPanel1.Controls.Add(btnNextPage);
+            flowLayoutPanel1.Controls.Add(btnLastPage);
+            flowLayoutPanel1.Dock = DockStyle.Bottom;
+            flowLayoutPanel1.Location = new Point(0, 470);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(894, 29);
+            flowLayoutPanel1.TabIndex = 3;
+            // 
+            // btnFirstPage
+            // 
+            btnFirstPage.Location = new Point(3, 3);
+            btnFirstPage.Name = "btnFirstPage";
+            btnFirstPage.Size = new Size(75, 23);
+            btnFirstPage.TabIndex = 3;
+            btnFirstPage.Text = "|<";
+            btnFirstPage.UseVisualStyleBackColor = true;
+            // 
+            // btnPreviousPage
+            // 
+            btnPreviousPage.Location = new Point(84, 3);
+            btnPreviousPage.Name = "btnPreviousPage";
+            btnPreviousPage.Size = new Size(75, 23);
+            btnPreviousPage.TabIndex = 0;
+            btnPreviousPage.Text = "<-";
+            btnPreviousPage.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Location = new Point(165, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(33, 29);
+            label3.TabIndex = 4;
+            label3.Text = "Page";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Location = new Point(204, 3);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(54, 23);
+            numericUpDown1.TabIndex = 5;
+            numericUpDown1.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Location = new Point(264, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(41, 29);
+            label2.TabIndex = 6;
+            label2.Text = "Of 100";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label1.AutoSize = true;
+            label1.Location = new Point(311, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(36, 29);
+            label1.TabIndex = 7;
+            label1.Text = "Show";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // cbPageSize
+            // 
+            cbPageSize.FormattingEnabled = true;
+            cbPageSize.Items.AddRange(new object[] { "10", "20", "50", "100", "500", "1000" });
+            cbPageSize.Location = new Point(353, 3);
+            cbPageSize.Name = "cbPageSize";
+            cbPageSize.Size = new Size(67, 23);
+            cbPageSize.TabIndex = 8;
+            cbPageSize.SelectedItem = 50;
+            // 
+            // btnNextPage
+            // 
+            btnNextPage.Location = new Point(426, 3);
+            btnNextPage.Name = "btnNextPage";
+            btnNextPage.Size = new Size(75, 23);
+            btnNextPage.TabIndex = 1;
+            btnNextPage.Text = "->";
+            btnNextPage.UseVisualStyleBackColor = true;
+            // 
+            // btnLastPage
+            // 
+            btnLastPage.Location = new Point(507, 3);
+            btnLastPage.Name = "btnLastPage";
+            btnLastPage.Size = new Size(75, 23);
+            btnLastPage.TabIndex = 2;
+            btnLastPage.Text = ">|";
+            btnLastPage.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView
+            // 
+            dataGridView.AllowUserToAddRows = false;
+            dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AllowUserToOrderColumns = true;
+            dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView.Dock = DockStyle.Fill;
+            dataGridView.Location = new Point(0, 29);
+            dataGridView.Name = "dataGridView";
+            dataGridView.ReadOnly = true;
+            dataGridView.Size = new Size(894, 441);
+            dataGridView.TabIndex = 4;
             // 
             // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(894, 521);
+            Controls.Add(dataGridView);
+            Controls.Add(flowLayoutPanel1);
             Controls.Add(flowLayoutPanel);
             Controls.Add(statusStrip1);
             Name = "MainWindow";
@@ -143,6 +281,11 @@
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             flowLayoutPanel.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -158,5 +301,17 @@
         private ToolStripSplitButton toolStripSplitButton1;
         private ToolStripMenuItem connectToolStripMenuItem;
         private ToolStripStatusLabel tsTableStatistics;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Button btnPreviousPage;
+        private Button btnNextPage;
+        private Button btnLastPage;
+        private Button btnFirstPage;
+        private Label label3;
+        private NumericUpDown numericUpDown1;
+        private Label label2;
+        private Label label1;
+        private ComboBox cbPageSize;
+        private BindingSource bindingSource1;
+        private DataGridView dataGridView;
     }
 }

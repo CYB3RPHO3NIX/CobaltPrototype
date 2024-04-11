@@ -1,4 +1,5 @@
 using CobaltPrototype.Models;
+using System.Windows.Forms;
 using static System.Windows.Forms.Design.AxImporter;
 
 namespace CobaltPrototype
@@ -6,6 +7,10 @@ namespace CobaltPrototype
     public partial class MainWindow : Form
     {
         private DatabaseManager _databaseManager;
+        private DataManager _dataManager;
+
+        private string _ServerName;
+        private string _DatabaseName;
         public MainWindow()
         {
             InitializeComponent();
@@ -18,6 +23,7 @@ namespace CobaltPrototype
                 if (popup.ShowDialog() == DialogResult.OK)
                 {
                     string enteredText = popup._ServerName;
+                    this._ServerName = enteredText;
                     _databaseManager = new DatabaseManager(enteredText);
                     CrossThreadSafeUpdate.UpdateToolStripStatusLabel(tsLabelConnectivity, $"Server Connected: {enteredText}");
                     LoadDatabaseDropdown();
@@ -67,7 +73,7 @@ namespace CobaltPrototype
         private void LoadTableDropdown()
         {
             tsButtonTable.DropDownItems.Clear();
-            _databaseManager.GetAllTables();
+            _databaseManager.GetAllTablesOrViews();
             foreach (var item in _databaseManager._tables)
             {
                 if (item.IsSelected)
@@ -88,22 +94,24 @@ namespace CobaltPrototype
         private void tsButtonDatabase_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             tsButtonDatabase.Text = e.ClickedItem?.Text;
-            _databaseManager.SelectDatabase(tsButtonDatabase.Text);
+            _databaseManager.SelectDatabase(e.ClickedItem?.Text);
+            _DatabaseName = e.ClickedItem?.Text;
+            _dataManager = new DataManager(_ServerName, _DatabaseName);
             //If the user has selected then get all schemas within that database.
-            
+
             LoadSchemaDropdown();
         }
         private void tsButtonSchema_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             tsButtonSchema.Text = e.ClickedItem?.Text;
-            _databaseManager.SelectSchema(tsButtonSchema.Text);
+            _databaseManager.SelectSchema(e.ClickedItem?.Text);
             //If the user has selected then get all table within that Schema.
-            
+
             LoadTableDropdown();
         }
         private void tsButtonTable_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            _databaseManager.SelectTable(tsButtonTable.Text);
+            _databaseManager.SelectTable(e.ClickedItem?.Text);
             tsButtonTable.Text = e.ClickedItem?.Text;
 
             ShowTableData();
@@ -111,7 +119,16 @@ namespace CobaltPrototype
 
         private void ShowTableData()
         {
-            
+            ClearDataGrid();
+            string schema = _databaseManager.GetSelectedSchema();
+            string table = _databaseManager.GetSelectedTable();
+            var data = _dataManager.GetData(schema, table, Convert.ToInt32(numericUpDown1.Value),  50);
+            dataGridView.AutoGenerateColumns = true;
+            dataGridView.DataSource = data;
+        }
+        private void ClearDataGrid()
+        {
+            dataGridView.Rows.Clear();
         }
         private void UpdateTableStatistics(int pageNo, int totalPage, int pageSize)
         {

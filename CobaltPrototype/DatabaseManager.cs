@@ -22,6 +22,18 @@ namespace CobaltPrototype
             _schemas = new List<Schema>();
             _tables = new List<Table>();
         }
+        public string GetSelectedDatabase()
+        {
+            return _databases.Where(e => e.IsSelected == true).FirstOrDefault().Name;
+        }
+        public string GetSelectedSchema() 
+        {
+            return _schemas.Where(e => e.IsSelected == true).FirstOrDefault().Name;
+        }
+        public string GetSelectedTable() 
+        {
+            return _tables.Where(e => e.IsSelected == true).FirstOrDefault().Name;
+        }
         public bool IsConnectionSuccessful()
         {
             string connectionString = $"Data Source={_serverName};Integrated Security=True;";
@@ -125,7 +137,7 @@ namespace CobaltPrototype
 
 
         }
-        public void GetAllTables()
+        public void GetAllTablesOrViews()
         {
             if (_databases.Find(e => e.IsSelected == true) == null)
                 return;
@@ -151,6 +163,18 @@ namespace CobaltPrototype
                         _tables.Add(new Table()
                         {
                             Name = tableName,
+                            IsSelected = false
+                        });
+                    }
+
+                    DataTable views = connection.GetSchema("Views", new string[] { null, schemaName });
+
+                    foreach (DataRow row in views.Rows)
+                    {
+                        string viewName = row.Field<string>("TABLE_NAME");
+                        _tables.Add(new Table()
+                        {
+                            Name = viewName,
                             IsSelected = false
                         });
                     }
@@ -183,7 +207,7 @@ namespace CobaltPrototype
                 _schemas.ForEach(schema => schema.IsSelected = false);
                 _schemas.Find(e => e.Name == schemaName).IsSelected = true;
 
-                GetAllTables();
+                GetAllTablesOrViews();
             }
         }
         public void SelectTable(string tableName) 
