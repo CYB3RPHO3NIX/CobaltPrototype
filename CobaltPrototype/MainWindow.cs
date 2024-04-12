@@ -14,6 +14,7 @@ namespace CobaltPrototype
         public MainWindow()
         {
             InitializeComponent();
+            cbPageSize.SelectedIndex = 3;
         }
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -113,8 +114,6 @@ namespace CobaltPrototype
         {
             _databaseManager.SelectTable(e.ClickedItem?.Text);
             tsButtonTable.Text = e.ClickedItem?.Text;
-
-            ShowTableData();
         }
 
         private void ShowTableData()
@@ -122,17 +121,22 @@ namespace CobaltPrototype
             ClearDataGrid();
             string schema = _databaseManager.GetSelectedSchema();
             string table = _databaseManager.GetSelectedTable();
-            var data = _dataManager.GetData(schema, table, Convert.ToInt32(numericUpDown1.Value),  50);
+            var data = _dataManager.GetData(schema, table, Convert.ToInt32(numericUpDown1.Value), Convert.ToInt32(cbPageSize.SelectedItem));
             dataGridView.AutoGenerateColumns = true;
             dataGridView.DataSource = data;
         }
         private void ClearDataGrid()
         {
-            dataGridView.Rows.Clear();
+            dataGridView.DataSource = null;
         }
         private void UpdateTableStatistics(int pageNo, int totalPage, int pageSize)
         {
             CrossThreadSafeUpdate.UpdateToolStripStatusLabel(tsTableStatistics, $"Showing Page {pageNo} of {totalPage} (Page Size: {pageSize})");
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            ShowTableData();
         }
     }
 }

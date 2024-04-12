@@ -52,6 +52,7 @@
             btnLastPage = new Button();
             bindingSource1 = new BindingSource(components);
             dataGridView = new DataGridView();
+            btnRefresh = new Button();
             statusStrip1.SuspendLayout();
             flowLayoutPanel.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -157,6 +158,7 @@
             flowLayoutPanel1.Controls.Add(label3);
             flowLayoutPanel1.Controls.Add(numericUpDown1);
             flowLayoutPanel1.Controls.Add(label2);
+            flowLayoutPanel1.Controls.Add(btnRefresh);
             flowLayoutPanel1.Controls.Add(label1);
             flowLayoutPanel1.Controls.Add(cbPageSize);
             flowLayoutPanel1.Controls.Add(btnNextPage);
@@ -219,7 +221,7 @@
             // 
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Location = new Point(311, 0);
+            label1.Location = new Point(392, 0);
             label1.Name = "label1";
             label1.Size = new Size(36, 29);
             label1.TabIndex = 7;
@@ -230,15 +232,14 @@
             // 
             cbPageSize.FormattingEnabled = true;
             cbPageSize.Items.AddRange(new object[] { "10", "20", "50", "100", "500", "1000" });
-            cbPageSize.Location = new Point(353, 3);
+            cbPageSize.Location = new Point(434, 3);
             cbPageSize.Name = "cbPageSize";
             cbPageSize.Size = new Size(67, 23);
             cbPageSize.TabIndex = 8;
-            cbPageSize.SelectedItem = 50;
             // 
             // btnNextPage
             // 
-            btnNextPage.Location = new Point(426, 3);
+            btnNextPage.Location = new Point(507, 3);
             btnNextPage.Name = "btnNextPage";
             btnNextPage.Size = new Size(75, 23);
             btnNextPage.TabIndex = 1;
@@ -247,7 +248,7 @@
             // 
             // btnLastPage
             // 
-            btnLastPage.Location = new Point(507, 3);
+            btnLastPage.Location = new Point(588, 3);
             btnLastPage.Name = "btnLastPage";
             btnLastPage.Size = new Size(75, 23);
             btnLastPage.TabIndex = 2;
@@ -258,14 +259,27 @@
             // 
             dataGridView.AllowUserToAddRows = false;
             dataGridView.AllowUserToDeleteRows = false;
-            dataGridView.AllowUserToOrderColumns = true;
+            dataGridView.AllowUserToResizeRows = false;
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.Dock = DockStyle.Fill;
             dataGridView.Location = new Point(0, 29);
+            dataGridView.MultiSelect = false;
             dataGridView.Name = "dataGridView";
             dataGridView.ReadOnly = true;
+            dataGridView.RowHeadersVisible = false;
             dataGridView.Size = new Size(894, 441);
             dataGridView.TabIndex = 4;
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.Location = new Point(311, 3);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(75, 23);
+            btnRefresh.TabIndex = 5;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.UseVisualStyleBackColor = true;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // MainWindow
             // 
@@ -313,5 +327,6 @@
         private ComboBox cbPageSize;
         private BindingSource bindingSource1;
         private DataGridView dataGridView;
+        private Button btnRefresh;
     }
 }
